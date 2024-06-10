@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";                          
 // import teacherRouter from "./router/teacher.js";
 import teachersRouter from "./router/teachersRouter.js";
 // import studentRouter from "./router/student.js";
@@ -6,6 +7,11 @@ import studentdBRouter from "./router/studentRouter.js";
 import todosRouter from "./router/todos.js";
 import connectToDb from "./router/db-utils/mongo-connection.js";
 import mongooseConnect from "./router/db-utils/mongoose-connections.js";
+import dotenv from "dotenv";
+
+
+dotenv.config();
+console.log(process.env);
 
 const server = express();
 
@@ -13,6 +19,16 @@ await connectToDb();
 await mongooseConnect();
 
  server.use(express.json());
+//  server.use(cors());
+
+// server.use(cors());
+
+server.use(cors({
+    origin: ['http://localhost:5173'], 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
 
  server.post("/create-file",() => {
 

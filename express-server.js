@@ -23,12 +23,7 @@ await mongooseConnect();
 
 // server.use(cors());
 
-server.use(cors({
-    origin: ['http://localhost:5173'], 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-}));
+server.use(cors());
 
  server.post("/create-file",() => {
 

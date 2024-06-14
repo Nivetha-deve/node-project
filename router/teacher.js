@@ -64,4 +64,4 @@ teacherRouter.delete("/:teacherId",(req,res) => {
  res.status(400).send({msg:"please enter student data"})
 }
 });
-export default teacherRouter;
+export default teacherRouter ;

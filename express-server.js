@@ -8,6 +8,8 @@ import todosRouter from "./router/todos.js";
 import connectToDb from "./router/db-utils/mongo-connection.js";
 import mongooseConnect from "./router/db-utils/mongoose-connections.js";
 import dotenv from "dotenv";
+import registerRouter from "./router/auth/register.js";
+import loginRouter from "./router/auth/login.js";
 
 
 dotenv.config();
@@ -54,6 +56,8 @@ server.delete("/",(req,res) => {
 server.use("/teachers",teachersRouter);
 server.use("/students",studentdBRouter);
 server.use("/todos",todosRouter);
+server.use("/register",registerRouter);
+server.use("/login",loginRouter);
 
 const port = 8000;
 server.listen(port, () => {

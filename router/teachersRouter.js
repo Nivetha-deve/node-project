@@ -1,5 +1,5 @@
 import express from "express";
-import teacherModel from "./db-utils/models.js";
+import {teacherModel} from "./db-utils/models.js";
 const teachersRouter = express.Router();
 
 teachersRouter.get("/", async (req,res) => {

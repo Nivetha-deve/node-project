@@ -9,7 +9,7 @@ dotenv.config();
 
 
 const dbCluster = process.env.DB_CLUSTER || "localhost:27017";
-const dbName = process.env.DB_NAME || "tamil-weekend";
+const dbName = process.env.DB_NAME || "tamil-weekend-app";
 const dbUserName = encodeURIComponent(process.env.DB_USER || "");
 const dbPassword = encodeURIComponent(process.env.DB_PASSWORD || "");
 

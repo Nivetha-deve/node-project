@@ -25,7 +25,7 @@ const teacherSchema = new mongoose.Schema({
 });
 
 //model creation using schema
-const teacherModel = new mongoose.model("teacher", teacherSchema,"teachers");
+const teacherModel = new mongoose.model("teacher",teacherSchema,"teachers")
 
 const userSchema = new mongoose.Schema({
     id:{

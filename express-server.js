@@ -10,6 +10,8 @@ import mongooseConnect from "./router/db-utils/mongoose-connections.js";
 import dotenv from "dotenv";
 import registerRouter from "./router/auth/register.js";
 import loginRouter from "./router/auth/login.js";
+import jwt from "jsonwebtoken";
+import verifyUserRouter from "./router/auth/verifyUser.js";
 
 
 dotenv.config();
@@ -53,9 +55,44 @@ server.delete("/",(req,res) => {
   res.send({message: "delete the data"})
 });
 
-server.use("/teachers",teachersRouter);
-server.use("/students",studentdBRouter);
-server.use("/todos",todosRouter);
+// const customeMiddleware = (req,res,next) => {
+//     console.log(new Date().toString(),"Handling request for",req.url);
+//next();
+// };
+
+//middleware to authorize the apis
+const authApi = (req,res,next) => {
+    try{
+    const token = req.headers["authorization"];
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+
+    if(data.role === "Teacher"){
+        next(); 
+    } else {
+        throw new Error();
+    }
+}catch(err){
+    res.status(403).send({msg: "Unauthorized"});
+}
+};
+
+const authAllapi = (req,res,next) => {
+    try{
+        const token = req.headers["authorization"];
+        jwt.verify(token,process.env.JWT_SECRET);
+        next(); 
+    }catch(err){
+        console.log(err.message);
+       //err
+       res.status(403).send({msg:"unauthorized"});
+    }
+}
+
+//adding middleware to teacger to connect export token to backendend
+server.use("/teachers",authApi,teachersRouter);
+server.use("/students",authAllapi, studentdBRouter);
+server.use("/verify-user",verifyUserRouter)
+server.use("/todos",authAllapi,todosRouter);
 server.use("/register",registerRouter);
 server.use("/login",loginRouter);
 
